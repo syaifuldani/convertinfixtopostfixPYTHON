@@ -1,0 +1,41 @@
+def stack():
+    s=[]                        #SEBAGAI PENAMPUNG DARI DATA STACK
+    return (s)
+def push(s,data):               #SEBAGAI PENAMBAH KE DALAM STACK
+    s.append(data)
+def pop(s):                     #SEBAGAI PENGHAPUS DATA YANG ADA DIDALAM STACK
+    data=s.pop()
+    return (data)
+def peek(s):                    #SEBAGAI FUNGSI YG mengembalikan elemen teratas dari tumpukan tanpa menghapusnya dari tumpukan
+    return(s[len(s)-1])
+def isEmpty(s):                 #SEBAGAI PENGECEK DI DALAM Var KOSONG APA TIDAK
+    return (s == [])
+def size(s):                    #SEBAGAI PENGHITUNG PANJANG DARI STACK
+    return(len(s))
+
+def infix_to_postfix (user):
+    precendence = {'+': 1,'-': 2,'*': 2,'/': 2,'^': 3}
+    stack = []
+    output = []
+
+    for char in user :
+        if char.isalnum():
+            output.append(char)
+        elif char in '+-*/^':
+            while stack and stack[-1] != '(' and precendence[char] <= precendence.get(stack[-1],0):
+                output.append(stack.pop())
+            stack.append(char)
+        elif char == '(' :
+            stack.append(char)
+        elif char == ')' :
+            while stack and stack[-1] != '(' :
+                output.append(stack.pop())
+            if stack and stack[-1] == '(' :
+                stack.pop()
+    while stack :
+        output.append(stack.pop())
+    return ' '.join(output)
+
+user = '2 + 5 * 1 / ( 5 - 1 ) ^ 2'
+postfix_rtrn = infix_to_postfix(user)
+print(postfix_rtrn)
